@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Survey Results</title>
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='background.jpg') }}");
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-shadow: 2px 2px 4px #000;
+            text-align: center;
+            padding-top: 100px;
+        }
+        .result-container {
+            background-color: rgba(0,0,0,0.7);
+            padding: 40px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+        a, button {
+            color: black;
+            background-color: #FFCB05;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="result-container">
+        <h2>🎯 Thank You for Participating 🎯</h2>
+        <p><strong>Your Name:</strong> {{ name }}</p>
+        <p><strong>Favorite Hobby:</strong> {{ hobby }}</p>
+        <p><strong>Favorite Food:</strong> {{ food }}</p>
+        <p><strong>Favorite Vacation Spot:</strong> {{ vacation }}</p>
+        <p><strong>Favorite Animal:</strong> {{ animal }}</p>
+        <p><strong>Favorite Movie:</strong> {{ movie }}</p>
+        <p><strong>Dream Job:</strong> {{ job }}</p>
+
+        <a href="/">Submit another response</a>
+        <a href="{{ url_for('submissions') }}">View All Submissions</a>
+    </div>
+</body>
+</html>

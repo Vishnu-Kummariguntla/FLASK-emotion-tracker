@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Personal Survey</title>
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='background.jpg') }}");
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-shadow: 2px 2px 4px #000;
+            padding-top: 100px;
+            text-align: center;
+        }
+        .form-container {
+            background-color: rgba(0,0,0,0.7);
+            padding: 40px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+        input[type=text] {
+            padding: 10px;
+            margin: 10px 0;
+            width: 300px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+        input[type=submit] {
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: #FFCB05;
+            color: black;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>🎯 Personal Survey 🎯</h2>
+        <form method="post">
+            <label>Your Name:</label><br>
+            <input type="text" name="name" required><br>
+
+            <label>Favorite Hobby:</label><br>
+            <input type="text" name="hobby" required><br>
+
+            <label>Favorite Food:</label><br>
+            <input type="text" name="food" required><br>
+
+            <label>Favorite Vacation Spot:</label><br>
+            <input type="text" name="vacation" required><br>
+
+            <label>Favorite Animal:</label><br>
+            <input type="text" name="animal" required><br>
+
+            <label>Favorite Movie:</label><br>
+            <input type="text" name="movie" required><br>
+
+            <label>Dream Job:</label><br>
+            <input type="text" name="job" required><br><br>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>

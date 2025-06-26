@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Submissions</title>
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='background.jpg') }}");
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-shadow: 1px 1px 3px #000;
+            text-align: center;
+            padding: 50px;
+        }
+        .table-container {
+            background-color: rgba(0,0,0,0.7);
+            padding: 30px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-top: 20px;
+            margin-bottom: 40px;
+            width: 90%;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            color: white;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+        }
+        th {
+            background-color: #FFCB05;
+            color: black;
+        }
+        a {
+            color: black;
+            background-color: #FFCB05;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>📊 All Survey Submissions 📊</h2>
+
+    <!-- User Submissions Table -->
+    <div class="table-container">
+        <h3>User Submissions</h3>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Hobby</th>
+                <th>Food</th>
+                <th>Vacation</th>
+                <th>Animal</th>
+                <th>Movie</th>
+                <th>Job</th>
+            </tr>
+            {% for submission in submissions %}
+            <tr>
+                {% for field in submission %}
+                <td>{{ field }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- Personalized Music Plan Table -->
+    <div class="table-container">
+        <h3>Personalized Music Plans</h3>
+        <table>
+            <tr>
+                <th>Pitch</th>
+                <th>Rhythm</th>
+                <th>Melody</th>
+                <th>Timbre</th>
+                <th>Form</th>
+                <th>Tempo</th>
+                <th>Lyrics</th>
+            </tr>
+            {% for plan in plans %}
+            <tr>
+                <td>{{ plan['Pitch'] }}</td>
+                <td>{{ plan['Rhythm'] }}</td>
+                <td>{{ plan['Melody'] }}</td>
+                <td>{{ plan['Timbre'] }}</td>
+                <td>{{ plan['Form'] }}</td>
+                <td>{{ plan['Tempo'] }}</td>
+                <td>{{ plan['Lyrics'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- Reference Tables -->
+    <div class="table-container">
+        <h3>Pitch</h3>
+        <table>
+            <tr><th>Example</th><th>Emotional Context</th></tr>
+            <tr><td>C</td><td>Happy, Pure, Calm</td></tr>
+            <tr><td>A</td><td>Melancholic, Sad</td></tr>
+            <tr><td>G</td><td>Victorious, Bold</td></tr>
+            <tr><td>B</td><td>Dramatic, Tense</td></tr>
+        </table>
+
+        <h3>Rhythm</h3>
+        <table>
+            <tr><th>Example</th><th>Emotional Context</th></tr>
+            <tr><td>Steady 4/4</td><td>Relaxed, Predictable</td></tr>
+            <tr><td>Fast Syncopation</td><td>Excited, Energetic</td></tr>
+            <tr><td>Slow Waltz 3/4</td><td>Romantic, Flowing</td></tr>
+            <tr><td>Irregular 5/4</td><td>Uneasy, Tense</td></tr>
+        </table>
+
+        <h3>Melody</h3>
+        <table>
+            <tr><th>Example</th><th>Emotional Context</th></tr>
+            <tr><td>Ascending Stepwise</td><td>Hopeful, Bright</td></tr>
+            <tr><td>Descending Intervals</td><td>Sad, Falling</td></tr>
+            <tr><td>Leaping Melody</td><td>Joyful, Playful</td></tr>
+            <tr><td>Minor Scales</td><td>Melancholic, Dark</td></tr>
+        </table>
+
+        <h3>Harmony</h3>
+        <table>
+            <tr><th>Example</th><th>Emotional Context</th></tr>
+            <tr><td>Major Triads</td><td>Happy, Stable</td></tr>
+            <tr><td>Minor Triads</td><td>Sad, Reflective</td></tr>
+            <tr><td>Dissonant Chords</td><td>Tense, Anxious</td></tr>
+            <tr><td>Seventh Chords</td><td>Complex, Jazzy</td></tr>
+        </table>
+
+        <h3>Timbre</h3>
+        <table>
+            <tr><th>Example</th><th>Emotional Context</th></tr>
+            <tr><td>Flute</td><td>Light, Airy, Innocent</td></tr>
+            <tr><td>Electric Guitar</td><td>Edgy, Bold</td></tr>
+            <tr><td>Strings (Violin)</td><td>Romantic, Emotional</td></tr>
+            <tr><td>Brass (Trumpet)</td><td>Triumphant, Bold</td></tr>
+        </table>
+
+        <h3>Dynamics</h3>
+        <table>
+            <tr><th>Example</th><th>Emotional Context</th></tr>
+            <tr><td>Pianissimo (very soft)</td><td>Intimate, Fragile</td></tr>
+            <tr><td>Forte (loud)</td><td>Powerful, Confident</td></tr>
+            <tr><td>Crescendo</td><td>Building excitement</td></tr>
+            <tr><td>Diminuendo</td><td>Calming, Releasing tension</td></tr>
+        </table>
+
+        <h3>Tempo</h3>
+        <table>
+            <tr><th>Example</th><th>Emotional Context</th></tr>
+            <tr><td>60 BPM (Adagio)</td><td>Calm, Reflective</td></tr>
+            <tr><td>120 BPM (Moderato)</td><td>Balanced, Steady</td></tr>
+            <tr><td>160 BPM (Allegro)</td><td>Excited, Lively</td></tr>
+            <tr><td>200 BPM (Presto)</td><td>Rushed, Anxious</td></tr>
+        </table>
+
+        <h3>Texture</h3>
+        <table>
+            <tr><th>Example</th><th>Emotional Context</th></tr>
+            <tr><td>Solo (monophonic)</td><td>Intimate, Focused</td></tr>
+            <tr><td>Choir (polyphonic)</td><td>Rich, Complex</td></tr>
+            <tr><td>Orchestral (homophonic)</td><td>Powerful, Majestic</td></tr>
+            <tr><td>Minimalist Texture</td><td>Repetitive, Hypnotic</td></tr>
+        </table>
+
+        <h3>Form</h3>
+        <table>
+            <tr><th>Example</th><th>Emotional Context</th></tr>
+            <tr><td>Verse-Chorus</td><td>Familiar, Catchy</td></tr>
+            <tr><td>ABA (ternary)</td><td>Balanced, Return to home</td></tr>
+            <tr><td>Theme & Variations</td><td>Creative, Inventive</td></tr>
+            <tr><td>Rondo</td><td>Playful, Repetitive</td></tr>
+        </table>
+
+        <h3>Silence</h3>
+        <table>
+            <tr><th>Example</th><th>Emotional Context</th></tr>
+            <tr><td>Pause before final note</td><td>Suspense, Anticipation</td></tr>
+            <tr><td>Rest between phrases</td><td>Breath, Calm</td></tr>
+            <tr><td>Sudden break</td><td>Shock, Surprise</td></tr>
+            <tr><td>Extended silence</td><td>Stillness, Reflection</td></tr>
+        </table>
+
+        <h3>Lyrics</h3>
+        <table>
+            <tr><th>Example Phrase</th><th>Emotional Context</th></tr>
+            <tr><td>"I feel alive in the sunshine"</td><td>Happy</td></tr>
+            <tr><td>"Tears fall like rain tonight"</td><td>Sad</td></tr>
+            <tr><td>"We rise like mountains"</td><td>Inspirational</td></tr>
+            <tr><td>"Lost in a storm of doubt"</td><td>Anxious</td></tr>
+            <tr><td>"The stars will guide me home"</td><td>Hopeful</td></tr>
+        </table>
+    </div>
+
+    <a href="/">Back to Form</a>
+</body>
+</html>
