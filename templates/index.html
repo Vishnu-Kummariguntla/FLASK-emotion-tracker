@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cricket & Star Wars Archetype Survey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f0f4f7;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            margin: auto;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        input[type="text"], button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        button {
+            background-color: #27ae60;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #219150;
+        }
+    </style>
+</head>
+<body>
+    <h1>Discover Your Cricket & Star Wars Archetypes</h1>
+    <form method="post">
+        <label>Name:</label>
+        <input type="text" name="name" required>
+
+        <label>Hobby:</label>
+        <input type="text" name="hobby">
+
+        <label>Favorite Food:</label>
+        <input type="text" name="food">
+
+        <label>Dream Vacation:</label>
+        <input type="text" name="vacation">
+
+        <label>Favorite Animal:</label>
+        <input type="text" name="animal">
+
+        <label>Favorite Movie:</label>
+        <input type="text" name="movie">
+
+        <label>Dream Job:</label>
+        <input type="text" name="job">
+
+        <h3>Enter 5 Recently Visited Websites:</h3>
+        <input type="text" name="url1" placeholder="e.g. https://youtube.com">
+        <input type="text" name="url2" placeholder="e.g. https://reddit.com">
+        <input type="text" name="url3" placeholder="e.g. https://espn.com">
+        <input type="text" name="url4" placeholder="e.g. https://notion.so">
+        <input type="text" name="url5" placeholder="e.g. https://duolingo.com">
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

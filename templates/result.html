@@ -4,47 +4,64 @@
     <title>Survey Results</title>
     <style>
         body {
-            background-image: url("{{ url_for('static', filename='background.jpg') }}");
-            background-size: cover;
-            font-family: Arial, sans-serif;
+            background-color: #111;
             color: white;
-            text-shadow: 2px 2px 4px #000;
+            font-family: Arial, sans-serif;
             text-align: center;
-            padding-top: 100px;
+            padding-top: 40px;
         }
-        .result-container {
-            background-color: rgba(0,0,0,0.7);
-            padding: 40px;
-            border-radius: 15px;
-            display: inline-block;
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 90%;
+            background-color: #222;
         }
-        a, button {
-            color: black;
+        th, td {
+            border: 1px solid #555;
+            padding: 10px;
+        }
+        th {
             background-color: #FFCB05;
-            font-weight: bold;
-            text-decoration: none;
-            font-size: 18px;
-            padding: 10px 20px;
-            border-radius: 8px;
-            margin: 10px;
-            border: none;
-            cursor: pointer;
+            color: black;
+        }
+        a {
+            color: #FFCB05;
         }
     </style>
 </head>
 <body>
-    <div class="result-container">
-        <h2>🎯 Thank You for Participating 🎯</h2>
-        <p><strong>Your Name:</strong> {{ name }}</p>
-        <p><strong>Favorite Hobby:</strong> {{ hobby }}</p>
-        <p><strong>Favorite Food:</strong> {{ food }}</p>
-        <p><strong>Favorite Vacation Spot:</strong> {{ vacation }}</p>
-        <p><strong>Favorite Animal:</strong> {{ animal }}</p>
-        <p><strong>Favorite Movie:</strong> {{ movie }}</p>
-        <p><strong>Dream Job:</strong> {{ job }}</p>
-
-        <a href="/">Submit another response</a>
-        <a href="{{ url_for('submissions') }}">View All Submissions</a>
-    </div>
+    <h2>📊 All Survey Submissions</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Hobby</th>
+            <th>Food</th>
+            <th>Vacation</th>
+            <th>Animal</th>
+            <th>Movie</th>
+            <th>Dream Job</th>
+            <th>Last 5 URLs</th>
+        </tr>
+        {% for person in submissions %}
+        <tr>
+            <td>{{ person.name }}</td>
+            <td>{{ person.hobby }}</td>
+            <td>{{ person.food }}</td>
+            <td>{{ person.vacation }}</td>
+            <td>{{ person.animal }}</td>
+            <td>{{ person.movie }}</td>
+            <td>{{ person.job }}</td>
+            <td>
+                <ul style="list-style: none; padding-left: 0;">
+                    {% for url in person.urls %}
+                        <li><a href="{{ url }}" target="_blank">{{ url }}</a></li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="/" style="color: #FFCB05;">← Submit Another Entry</a>
 </body>
 </html>

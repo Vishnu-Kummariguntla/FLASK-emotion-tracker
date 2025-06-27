@@ -1,129 +1,88 @@
-from flask import Flask, render_template, request
-import csv
-import os
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-DATA_FILE = 'submissions.csv'
+# In-memory storage of submitted data (cleared on restart)
+submitted_data = []
 
-# Create CSV file with header if not exists
-if not os.path.exists(DATA_FILE):
-    with open(DATA_FILE, mode='w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(['Name', 'Hobby', 'Food', 'Vacation', 'Animal', 'Movie', 'Job'])
+# Cricket archetype mapping
+website_to_cricket_archetype = {
+    "cricviz.com": "Strategist – Spin Bowler",
+    "espncricinfo.com/analysis": "Strategist – Spin Bowler",
+    "wikipedia.org": "Strategist – Spin Bowler",
+    "reddit.com/r/Cricket": "Blazer – T20 Batter",
+    "cricbuzz.com": "Blazer – T20 Batter",
+    "bbc.com/sport/cricket": "Shield – Test Batter",
+    "espn.com": "Enforcer – Fast Bowler",
+    "notion.so": "Analyst – Wicketkeeper",
+    "tradingview.com": "Finisher – Middle-Order",
+    "duolingo.com": "Shape-Shifter – All-Rounder",
+    "tripadvisor.com": "Watcher – Outfielder"
+}
 
-# Mapping logic
-def generate_music_plan(submission):
-    name, hobby, food, vacation, animal, movie, job = submission
+# Star Wars archetype mapping
+website_to_star_wars_archetype = {
+    "plato.stanford.edu": "Green – The Sage",
+    "ted.com/talks": "Green – The Sage",
+    "wikipedia.org": "Blue – The Guardian",
+    "un.org": "Blue – The Guardian",
+    "4chan.org": "Red – The Rebel",
+    "hackforums.net": "Red – The Rebel",
+    "reddit.com": "Purple – The Maverick",
+    "quora.com": "Purple – The Maverick",
+    "headspace.com": "White – The Redeemed",
+    "calm.com": "White – The Redeemed",
+    "eff.org": "Yellow – The Sentinel",
+    "archive.org": "Yellow – The Sentinel"
+}
 
-    # Map food to Pitch
-    food_pitch_map = {
-        'pizza': 'C',
-        'sushi': 'A',
-        'burger': 'G',
-        'pasta': 'F',
-        'salad': 'E'
-    }
-    pitch = food_pitch_map.get(food.lower(), 'C')
-
-    # Map hobby to Rhythm
-    hobby_rhythm_map = {
-        'reading': 'Slow Waltz 3/4',
-        'dancing': 'Fast Syncopation',
-        'sports': 'Steady 4/4',
-        'painting': 'Irregular 5/4',
-        'coding': 'Steady 4/4'
-    }
-    rhythm = hobby_rhythm_map.get(hobby.lower(), 'Steady 4/4')
-
-    # Map vacation to Melody
-    vacation_melody_map = {
-        'beach': 'Leaping Melody',
-        'mountains': 'Ascending Stepwise',
-        'city': 'Minor Scales',
-        'forest': 'Descending Intervals'
-    }
-    melody = vacation_melody_map.get(vacation.lower(), 'Ascending Stepwise')
-
-    # Map animal to Timbre
-    animal_timbre_map = {
-        'dog': 'Flute',
-        'cat': 'Electric Guitar',
-        'bird': 'Violin',
-        'lion': 'Trumpet'
-    }
-    timbre = animal_timbre_map.get(animal.lower(), 'Violin')
-
-    # Map movie to Form
-    movie_form_map = {
-        'inception': 'Theme & Variations',
-        'titanic': 'ABA (ternary)',
-        'avengers': 'Rondo',
-        'frozen': 'Verse-Chorus'
-    }
-    form = movie_form_map.get(movie.lower(), 'Verse-Chorus')
-
-    # Map job to Tempo
-    job_tempo_map = {
-        'scientist': '60 BPM (Adagio)',
-        'teacher': '120 BPM (Moderato)',
-        'athlete': '160 BPM (Allegro)',
-        'singer': '200 BPM (Presto)'
-    }
-    tempo = job_tempo_map.get(job.lower(), '120 BPM (Moderato)')
-
-    # Map pitch to simple lyrics
-    lyric_map = {
-        'C': '"I feel alive in the sunshine"',
-        'A': '"Tears fall like rain tonight"',
-        'G': '"We rise like mountains"',
-        'F': '"The stars will guide me home"',
-        'E': '"Lost in a storm of doubt"'
-    }
-    lyrics = lyric_map.get(pitch, '"I feel alive in the sunshine"')
-
-    return {
-        'Pitch': pitch,
-        'Rhythm': rhythm,
-        'Melody': melody,
-        'Timbre': timbre,
-        'Form': form,
-        'Tempo': tempo,
-        'Lyrics': lyrics
-    }
+def categorize_urls(urls, mapping):
+    role_count = {}
+    for url in urls:
+        if not url:
+            continue
+        for known_site in mapping:
+            if known_site in url:
+                role = mapping[known_site]
+                role_count[role] = role_count.get(role, 0) + 1
+                break
+    return max(role_count.items(), key=lambda x: x[1])[0] if role_count else "Uncategorized"
 
 @app.route('/', methods=['GET', 'POST'])
-def home():
+def index():
     if request.method == 'POST':
-        name = request.form.get('name')
-        hobby = request.form.get('hobby')
-        food = request.form.get('food')
-        vacation = request.form.get('vacation')
-        animal = request.form.get('animal')
-        movie = request.form.get('movie')
-        job = request.form.get('job')
+        urls = [
+            request.form.get('url1'),
+            request.form.get('url2'),
+            request.form.get('url3'),
+            request.form.get('url4'),
+            request.form.get('url5'),
+        ]
 
-        with open(DATA_FILE, mode='a', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow([name, hobby, food, vacation, animal, movie, job])
+        cricket_archetype = categorize_urls(urls, website_to_cricket_archetype)
+        star_wars_archetype = categorize_urls(urls, website_to_star_wars_archetype)
 
-        return render_template('result.html', name=name)
-    return render_template('form.html')
+        form_data = {
+            'name': request.form.get('name'),
+            'hobby': request.form.get('hobby'),
+            'food': request.form.get('food'),
+            'vacation': request.form.get('vacation'),
+            'animal': request.form.get('animal'),
+            'movie': request.form.get('movie'),
+            'job': request.form.get('job'),
+            'urls': urls,
+            'cricket_archetype': cricket_archetype,
+            'star_wars_archetype': star_wars_archetype
+        }
 
-@app.route('/submissions')
-def submissions():
-    all_submissions = []
-    generated_plans = []
+        submitted_data.append(form_data)
+        return redirect(url_for('results'))
 
-    with open(DATA_FILE, mode='r') as file:
-        reader = csv.reader(file)
-        next(reader)
-        for row in reader:
-            all_submissions.append(row)
-            plan = generate_music_plan(row)
-            generated_plans.append(plan)
+    return render_template('index.html')
 
-    return render_template('submissions.html', submissions=all_submissions, plans=generated_plans)
+@app.route('/results')
+def results():
+    return render_template('results.html', submissions=submitted_data)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Personal Survey</title>
+    <title>Personal Survey & History</title>
     <style>
         body {
-            background-image: url("{{ url_for('static', filename='background.jpg') }}");
-            background-size: cover;
+            background-color: #222;
             font-family: Arial, sans-serif;
             color: white;
-            text-shadow: 2px 2px 4px #000;
-            padding-top: 100px;
+            padding-top: 50px;
             text-align: center;
         }
         .form-container {
@@ -18,7 +16,7 @@
             border-radius: 15px;
             display: inline-block;
         }
-        input[type=text] {
+        input[type=text], input[type=submit] {
             padding: 10px;
             margin: 10px 0;
             width: 300px;
@@ -27,13 +25,12 @@
             font-size: 16px;
         }
         input[type=submit] {
-            padding: 10px 20px;
-            font-size: 18px;
-            border: none;
-            border-radius: 5px;
             background-color: #FFCB05;
             color: black;
             cursor: pointer;
+        }
+        .history-list {
+            margin-top: 30px;
         }
     </style>
 </head>
@@ -62,8 +59,23 @@
             <label>Dream Job:</label><br>
             <input type="text" name="job" required><br><br>
 
-            <input type="submit" value="Submit">
+            <input type="submit" name="submit_survey" value="Submit Survey">
         </form>
+
+        <form method="post">
+            <input type="submit" name="get_history" value="Show Last 10 Visited URLs">
+        </form>
+
+        {% if history %}
+        <div class="history-list">
+            <h3>🕵️ Last 10 Visited URLs</h3>
+            <ul>
+                {% for dt, url in history %}
+                    <li>{{ dt }} — <a href="{{ url }}" target="_blank" style="color:#FFCB05;">{{ url }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
     </div>
 </body>
 </html>

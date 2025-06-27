@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Survey Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f3;
+            padding: 20px;
+        }
+        h1 {
+            color: #34495e;
+        }
+        .card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .card h2 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .card em {
+            color: #16a085;
+            font-weight: bold;
+        }
+        ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Survey Results</h1>
+    {% for entry in submissions %}
+        <div class="card">
+            <h2>{{ entry.name }}</h2>
+            <p><strong>Cricket Archetype:</strong> <em>{{ entry.cricket_archetype }}</em></p>
+            <p><strong>Star Wars Archetype:</strong> <em>{{ entry.star_wars_archetype }}</em></p>
+            <p><strong>Hobby:</strong> {{ entry.hobby }}</p>
+            <p><strong>Favorite Food:</strong> {{ entry.food }}</p>
+            <p><strong>Dream Vacation:</strong> {{ entry.vacation }}</p>
+            <p><strong>Favorite Animal:</strong> {{ entry.animal }}</p>
+            <p><strong>Favorite Movie:</strong> {{ entry.movie }}</p>
+            <p><strong>Dream Job:</strong> {{ entry.job }}</p>
+            <p><strong>Visited URLs:</strong></p>
+            <ul>
+            {% for url in entry.urls %}
+                <li>{{ url }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+</body>
+</html>
